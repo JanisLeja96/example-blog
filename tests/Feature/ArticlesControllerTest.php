@@ -23,13 +23,10 @@ class ArticlesControllerTest extends TestCase
             ->once()
             ->andReturn(true);
 
-        NoCaptcha::shouldReceive('display')
-            ->zeroOrMoreTimes()
-            ->andReturn('<input type="hidden" name="g-recaptcha-response" value="1" />');
-
         $response = $this->post(route('articles.store'), [
             'title' => 'Example title',
-            'content' => 'Example content'
+            'content' => 'Example content',
+            'g-recaptcha-response' => 1
         ]);
 
         $response->assertStatus(200);
@@ -63,13 +60,10 @@ class ArticlesControllerTest extends TestCase
             ->once()
             ->andReturn(true);
 
-        NoCaptcha::shouldReceive('display')
-            ->zeroOrMoreTimes()
-            ->andReturn('<input type="hidden" name="g-recaptcha-response" value="1" />');
-
         $response = $this->put(route('articles.update', $article), [
             'title' => 'Example title',
-            'content' => 'Example content'
+            'content' => 'Example content',
+            'g-recaptcha-response' => 1
         ]);
 
         $response->assertStatus(200);
