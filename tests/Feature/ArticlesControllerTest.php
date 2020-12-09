@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use Anhskohbo\NoCaptcha\Facades\NoCaptcha;
 use App\Models\Article;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -17,6 +18,14 @@ class ArticlesControllerTest extends TestCase
         $this->actingAs($user);
 
         $this->followingRedirects();
+
+        NoCaptcha::shouldReceive('verifyResponse')
+            ->once()
+            ->andReturn(true);
+
+        NoCaptcha::shouldReceive('display')
+            ->zeroOrMoreTimes()
+            ->andReturn('<input type="hidden" name="g-recaptcha-response" value="1" />');
 
         $response = $this->post(route('articles.store'), [
             'title' => 'Example title',
@@ -49,6 +58,14 @@ class ArticlesControllerTest extends TestCase
         ]);
 
         $this->followingRedirects();
+
+        NoCaptcha::shouldReceive('verifyResponse')
+            ->once()
+            ->andReturn(true);
+
+        NoCaptcha::shouldReceive('display')
+            ->zeroOrMoreTimes()
+            ->andReturn('<input type="hidden" name="g-recaptcha-response" value="1" />');
 
         $response = $this->put(route('articles.update', $article), [
             'title' => 'Example title',
