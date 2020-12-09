@@ -15,9 +15,23 @@
                 <label for="content">Content:</label>
                 <textarea class="form-control" name="content" id="content" cols="30" rows="5">{{ $article->content }}</textarea>
             </div>
+            <div class="col-md-12">
+                <div class="form-group @error('g-recaptcha-response') 'has-error' @enderror">
+                    <label class="col-md-4 control-label">Captcha</label>
+                    <div class="col-md-6 pull-center">
+                        {!! app('captcha')->display() !!}
+                        @error('g-recaptcha-response')
+                        <span class="help-block">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                        @enderror
+                    </div>
+                </div>
+            </div>
             <div class="form-group">
                 <button type="submit" class="btn btn-primary">Update</button>
             </div>
         </form>
+        {!! NoCaptcha::renderJs() !!}
     </div>
 @endsection
