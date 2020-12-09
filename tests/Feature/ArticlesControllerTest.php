@@ -26,7 +26,7 @@ class ArticlesControllerTest extends TestCase
         $response = $this->post(route('articles.store'), [
             'title' => 'Example title',
             'content' => 'Example content',
-            'g-recaptcha-response' => 1
+            'g-recaptcha-response' => '1'
         ]);
 
         $response->assertStatus(200);
@@ -63,7 +63,7 @@ class ArticlesControllerTest extends TestCase
         $response = $this->put(route('articles.update', $article), [
             'title' => 'Example title',
             'content' => 'Example content',
-            'g-recaptcha-response' => 1
+            'g-recaptcha-response' => '1'
         ]);
 
         $response->assertStatus(200);
